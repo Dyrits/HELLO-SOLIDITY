@@ -7,7 +7,7 @@ function getEthereumProxy() {
     return proxy;
 }
 
-function checkAccounts(method) {
+function requestEthereumProxy(method) {
     return async function () {
         const proxy = getEthereumProxy();
         const accounts = await proxy.request({method}) as string[];
@@ -15,8 +15,8 @@ function checkAccounts(method) {
     }
 }
 
-const hasAccounts = checkAccounts("eth_accounts");
-const requestAccounts = checkAccounts("eth_requestAccounts");
+const hasAccounts = requestEthereumProxy("eth_accounts");
+const requestAccounts = requestEthereumProxy("eth_requestAccounts");
 
 async function run() {
     if (!await hasAccounts() && !await requestAccounts()) { throw new Error("No accounts found!");}
