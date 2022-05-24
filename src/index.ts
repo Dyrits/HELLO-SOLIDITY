@@ -1,16 +1,16 @@
 import { ethers } from "ethers";
 
-function getEthereum() {
+function getEthereumProxy() {
     // @ts-ignore
-    const ethereum = window.ethereum;
-    if (!ethereum) { throw new Error("No ethereum provider found!"); }
-    return ethereum;
+    const proxy = window.ethereum;
+    if (!proxy) { throw new Error("No ethereum provider found!"); }
+    return proxy;
 }
 
 function checkAccounts(method) {
     return async function () {
-        const ethereum = getEthereum();
-        const accounts = await ethereum.request({method}) as string[];
+        const proxy = getEthereumProxy();
+        const accounts = await proxy.request({method}) as string[];
         return accounts && accounts.length;
     }
 }
@@ -25,7 +25,7 @@ async function run() {
         [
             "function hello() public pure returns (string)",
         ],
-        new ethers.providers.Web3Provider(getEthereum())
+        new ethers.providers.Web3Provider(getEthereumProxy())
     )
     document.body.innerHTML = await contract.hello();
 }
