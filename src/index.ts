@@ -38,7 +38,8 @@ async function run() {
     const button = document.createElement("button");
     button.innerText = "Count";
     button.onclick = async () => {
-        await contract.count();
+        const transaction = await contract.count();
+        await transaction.wait();
         await setCounter();
     }
     document.body.appendChild(button);
