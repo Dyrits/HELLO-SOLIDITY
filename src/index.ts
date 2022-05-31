@@ -21,13 +21,26 @@ const requestAccounts = requestEthereumProxy("eth_requestAccounts");
 async function run() {
     if (!await hasAccounts() && !await requestAccounts()) { throw new Error("No accounts found!");}
     const contract = new ethers.Contract(
-        "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512", // Hardcoded~
+        process.env.CONTRACT_ADDRESS,
         [
-            "function hello() public pure returns (string)",
+            "function count() public",
+            "function getCounter() public view returns (uint256)"
         ],
-        new ethers.providers.Web3Provider(getEthereumProxy())
+        new ethers.providers.Web3Provider(getEthereumProxy()).getSigner()
     )
-    document.body.innerHTML = await contract.hello();
+    const counter = document.createElement("div");
+    async function setCounter() {
+        counter.innerText = await contract.getCounter();
+    }
+    await setCounter();
+    document.body.appendChild(counter);
+    const button = document.createElement("button");
+    button.innerText = "Count";
+    button.onclick = async () => {
+        await contract.count();
+        await setCounter();
+    }
+    document.body.appendChild(button);
 }
 
 run();
