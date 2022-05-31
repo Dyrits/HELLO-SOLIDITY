@@ -27,7 +27,8 @@ async function run() {
             "function getCounter() public view returns (uint256)"
         ],
         new ethers.providers.Web3Provider(getEthereumProxy()).getSigner()
-    )
+    );
+    console.info(contract);
     const counter = document.createElement("div");
     async function setCounter() {
         counter.innerText = await contract.getCounter();

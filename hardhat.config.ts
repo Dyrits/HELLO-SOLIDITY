@@ -7,6 +7,6 @@ import "@nomiclabs/hardhat-ethers";
 module.exports = {
   solidity: "0.8.10",
   networks: {
-    hardhat: { chainID: 1337 }
+    hardhat: { chainId: 1337 }
   }
 };
