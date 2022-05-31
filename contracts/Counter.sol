@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 contract Counter {
     uint32 counter;
 
-    function count() public returns (uint) {
+    function count() public returns (uint32) {
         counter ++;
         console.log("Counter:", counter);
         return counter;
